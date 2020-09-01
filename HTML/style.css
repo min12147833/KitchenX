@@ -1,0 +1,52 @@
+body {
+    font-family: "Lato", sans-serif;
+  }
+  
+  .sidenav {
+    height: 720px;
+    width:250px;
+    background-color: #252526;
+    float:left;
+    margin:5px;
+  }
+  
+  .sidenav a {
+    padding: 0px 0px 0px 0px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    width : 250px;
+    height: 46px;
+    margin:5px;
+  }
+  @font-face {
+    font-family: "My Font";
+    src: url("./FONT/NIXGONFONTS\ M\ 2.0.TTF");
+  }
+  
+  a{font-family: "My Font", serif;}
+  p{font-family: "My Font", serif;}
+  p{font-size: 30px;}
+  h2{font-size: 40px;}
+  h2{font-family: "My Font", serif;}
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+  #main {
+    width:900px;
+    height:800px;
+    float:left;
+    margin:5px;
+  }
+  #side_content_box{
+  display: inline;
+  background-color:#1e1e1e;
+  margin:5px;
+  }
+  #body {
+    background-color:#1e1e1e;
+    margin:0;
+  }
