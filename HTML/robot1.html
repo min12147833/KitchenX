@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script>if (window.module) module = window.module;</script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/socket.io-client/dist/socket.io.js"></script>
+    <style type="text/css">@import url("style.css");</style>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./style.css">
+  <style>
+  </style>
+</head>
+<body id="body">
+
+<div class="sidenav">
+  <a href="../index.html">HOME</a>
+  <a href="./submenu.html">레시피 설정</a>
+  <a href="./labels.html">로봇 설정</a>
+  <a href="./robot1.html">로봇1번</a>
+  <a href="./mainmenus.html">테스트</a>
+  <a href="./mainmenus.html">테스트</a>
+  <a href="./mainmenus.html">테스트</a>
+  <a href="./mainmenus.html">테스트</a>
+  <a href="./mainmenus.html">테스트</a>
+  <a href="./mainmenus.html">테스트</a>
+  <a href="./mainmenus.html">테스트</a>
+  <a href="./developer.html">개발자 창</a>
+
+</div>
+
+<div id="main">
+  <div id = "side_content_box">
+    <h2 style= "color: #ffffff">키친엑스 주방 자동화 통합 컨트롤 프로그램 DEMO</h2>
+      <p style= "color: #ffffff">아직 기능구현이 완벽하지 않은 상태입니다.</p>
+      <p style= "color: #ffffff">로봇1번 활성화</p>
+          <mat-form-field >
+              <textarea matInput placeholder="Description" rows="10" cols="45" id="chat" style="overflow-x:hidden; overflow-y:auto;"></textarea>
+          </mat-form-field>
+          <mat-form-field >
+            <textarea matInput placeholder="로봇의 데이터를 읽습니다." rows="10" cols="45" id="chatt" style="overflow-x:hidden; overflow-y:auto;"></textarea>
+          </mat-form-field></br>
+      <input type="text" id="user"><input type="button" value="입력" onclick="myOnClick()">
+      <input type="button" id="button1" onclick="button1_click();" value="led켜기" />
+      <input type="button" id="button1" onclick="button2_click();" value="led끄기" />
+      <input type="button" id="button1" onclick="button3_click();" value="시리얼데이터읽기" />
+  </div>
+  <div class ="slidecontainer">
+    <div>
+      <a style= "color: #ffffff">1번 모터속도 : <span id="servoPos1"></span></a><input type="button" id="button1" onclick="button4_click();" value="설정" /></br>
+      <input type="range" min="0" max="1023" class="slider1" id="servoSlider1" onchange="servo1(this.value);">
+    </div>
+    <div>
+      <a style= "color: #ffffff">2번 모터속도 : <span id="servoPos2"></span></a><input type="button" id="button1" onclick="button5_click();" value="설정" /></br>
+      <input type="range" min="0" max="1023" class="slider2" id="servoSlider2" onchange="servo2(this.value);">
+    </div>
+  </div>
+<script>
+  var text = document.getElementById('text');
+      var socket = io.connect('http://localhost:8080');
+      socket.on('rec', function (sendData) {
+        document.getElementById("chat").value='';
+          console.log(sendData)
+          $('#chatt').append(sendData);
+          
+      });
+      socket.on('recMsg', function (data) {
+          console.log(data)
+          $('#chat').append(data.comment);
+          socket.on('recMsg', function (data) {
+        });
+      });
+      function myOnClick() {
+          socket.emit('msg', {comment: $('#user').val()});
+          $('#user').val('');
+      }
+      function button1_click() {
+          socket.emit('msg1', 'a');
+          $('#user').val('');
+          port.write('1');
+          }
+      function button2_click() {
+          socket.emit('msg2', 'b');
+          $('#user').val('');
+          port.write('2');
+          }
+      function button3_click() {
+          socket.emit('msg3', 'c');
+          $('#user').val('');
+          
+          }
+      function button4_click() {
+        socket.emit('msg4', {comment: $('#servoSlider1').val()});
+          $('#servoSlider1').val('');
+          }
+      function button5_click() {
+        socket.emit('msg5', {comment: $('#servoSlider2').val()});
+          $('#servoSlider2').val('');
+          }
+          var slider1 = document.getElementById("servoSlider1");
+          var servoP = document.getElementById("servoPos1"); servoP.innerHTML = slider1.value;
+              slider1.oninput = function() { slider1.value = this.value; servoP.innerHTML = this.value; }
+                  $.ajaxSetup({timeout:1000}); function servo1(pos1) {
+                  $.get("/servo1?value=" + pos1 + "&"); {Connection: close};}
+          var slider2 = document.getElementById("servoSlider2");
+          var servoPP = document.getElementById("servoPos2"); servoPP.innerHTML = slider2.value;
+              slider2.oninput = function() { slider2.value = this.value; servoPP.innerHTML = this.value; }
+                  $.ajaxSetup({timeout:1000}); function servo2(pos2) {
+                    $.get("/servo1?value=" + pos2 + "&"); {Connection: close};}
+</script>
+   
+</body>
+</html> 
