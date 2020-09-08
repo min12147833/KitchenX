@@ -3,20 +3,19 @@ const path = require('path')
 const url = require('url')
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
-const port = new SerialPort('COM17', {
-  baudRate: 115200,
-
-})
+const port = new SerialPort('COM6', {
+  baudRate: 115200
+}, false);
 const parser = port.pipe(new Readline({ delimiter: '\r\n' }))
-var io = require('socket.io').listen(8080);
+var io = require('socket.io').listen(5300);
   // Switches the port into "flowing mode"
 //윈도우 객체의 전역으로 선언합니다. 그렇지 않으면 윈도우가 자동으로 닫는다.
 //자바 스크립트 객체가 가비지 수집 될 때 자동으로 닫는다.
 function createWindow () {
   // 브라우저 창을 생성합니다.
   const win = new BrowserWindow({
-    width: 1920,
-    height: 1080,
+    width: 1400,
+    height: 1000,
     
     webPreferences: {
       nodeIntegration: true
@@ -55,6 +54,7 @@ io.on('connection', function (socket) {
         console.log(data);
         socket.emit('recMsg', {comment: "로봇1번 출력" + ":" + data.comment+'\n'});
     })
+    /*
     socket.on('msg4', function (data) {
       console.log(data);
       socket.emit('recMsg', {comment: "로봇1번 모터값" + ":" + data.comment+'\n'});
@@ -63,21 +63,41 @@ io.on('connection', function (socket) {
       console.log(data);
       socket.emit('recMsg', {comment: "로봇2번 모터값" + ":" + data.comment+'\n'});
   })
-    socket.on('msg1', function (data) {
-      console.log(data);
-      port.write('1');
-      socket.emit('recMsg', {comment: "LED를 켭니다."+'\n'});
+  */
+    socket.on('msg1', function () {
+      console.log("poweron");
+      port.write('a');
+      socket.emit('recMsg', {comment: "POWER ON"+'\n'});
     })
-    socket.on('msg2', function (data) {
-    console.log(data);
-    port.write('2');
-    socket.emit('recMsg', {comment: "LED를 끕니다."+'\n'});
+    socket.on('msg2', function () {
+    console.log("poweroff");
+    port.write('b');
+    socket.emit('recMsg', {comment: "POWER OFF"+'\n'});
     })
-    socket.on('msg3', function (data) {
-    console.log(data);
-    port.write('3');
-    socket.emit('recMsg', {comment: "전송을 시작합니다."+'\n'});
+    socket.on('msg3', function () {
+    console.log("serialdata");
+    port.write('c');
+    //socket.emit('recMsg', {comment: "전송을 시작합니다."+'\n'});
     })
+    socket.on('msg4', function (data) {
+      console.log("motorspeed1");
+      port.write(data);
+      
+    })
+    socket.on('msg5', function (data) {
+      console.log("motorspeed2");
+      port.write(data);
+      
+    })
+    socket.on('temadd', function () {
+      console.log("add");
+      port.write('d');
+    })
+    socket.on('temsub', function () {
+      console.log("sub");
+      port.write('e');
+    })
+    
     var receivedData = "";
     port.on('data', function (data) {
       console.log('Data:'+ data)
