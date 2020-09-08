@@ -1,29 +1,24 @@
 {
-  "name": "Kitchen_X",
-  "version": "0.0.1",
-  "description": "my first socket.io app",
+  "name": "kitchenx-master",
+  "version": "1.0.0",
+  "description": "kitcchenx program",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "electron .",
+    "rebuild": "electron-rebuild -f -w serialport"
+  },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "custom-electron-titlebar": "^3.2.4",
+    "electron": "^10.1.1",
     "express": "^4.17.1",
     "jquery": "^3.5.1",
     "serialport": "^9.0.1",
     "slideout": "^1.0.1",
-    "socket.io": "^1.7.4"
-  },
-  "main": "index.js",
-  "scripts": {
-    "start": "electron .",
-    "rebuild": "electron-rebuild -f -w yourmodule"
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
-    "electron": "10.0.0",
     "electron-rebuild": "^2.0.1"
-  },
-  "repository": {
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
   }
 }
